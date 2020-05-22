@@ -1,4 +1,4 @@
-package ru.job4j.iterator;
+package ru.job4j.it;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class EvenIteratorTest {
 
     @Before
     public void setUp() {
-        it = new EvenNumbersIterator(new int[] {1, 2, 3, 4, 5, 6, 7});
+        it = new EvenIt(new int[] {1, 2, 3, 4, 5, 6, 7});
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -39,13 +39,13 @@ public class EvenIteratorTest {
 
     @Test
     public void  shouldReturnFalseIfNoAnyEvenNumbers() {
-        it = new EvenNumbersIterator(new int[]{1});
+        it = new EvenIt(new int[]{1});
         assertThat(it.hasNext(), is(false));
     }
 
     @Test
     public void allNumbersAreEven() {
-        it = new EvenNumbersIterator(new int[] {2, 4, 6, 8});
+        it = new EvenIt(new int[] {2, 4, 6, 8});
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
         assertThat(it.hasNext(), is(true));
