@@ -6,7 +6,7 @@ public class Converter {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
         return new Iterator<Integer>() {
-            private Iterator<Integer> integerIterator= (new ArrayList<Integer>()).iterator();
+            private Iterator<Integer> integerIterator= Collections.emptyIterator();
             @Override
             public boolean hasNext() {
                 while (it.hasNext() && !integerIterator.hasNext()) {
