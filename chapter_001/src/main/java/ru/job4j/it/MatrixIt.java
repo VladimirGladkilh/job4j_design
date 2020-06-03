@@ -15,8 +15,10 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return Arrays.stream(data).
-                flatMapToInt(Arrays::stream).skip(row * column).toArray().length > 0;
+        while (row < data.length && data[row].length == 0) {
+            row ++;
+        }
+        return row < data.length && column < data[row].length;
     }
 
     @Override
@@ -24,19 +26,12 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (data[row].length > 0) {
-            int ret = data[row][column];
-            column++;
-            if (column == data[row].length) {
-                column = 0;
-                row++;
-            }
-            return ret;
-        } else {
+        int ret = data[row][column++];
+        if (column == data[row].length) {
+            row ++;
             column = 0;
-            row++;
-            return next();
         }
+        return ret;
     }
 
 }
