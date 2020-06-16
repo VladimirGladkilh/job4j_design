@@ -4,30 +4,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] objects;
-    int len=0;
+    private Object[] objects;
+    private int len=0;
 
-    class SimpleArrayIterator implements Iterator<T> {
-        private int point = 0;
-        private Object[] data;
 
-        public SimpleArrayIterator(Object[] data) {
-            this.data = data;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return point < data.length;
-        }
-
-        @Override
-        public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            return (T) data[point++];
-        }
-    }
     public SimpleArray(int size) {
         this.objects = new Object[size];
     }
@@ -57,10 +37,27 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new SimpleArrayIterator(this.objects);
+        Iterator<T> iterator = new Iterator<>() {
+            private int point = 0;
+            private Object[] data = objects;
+
+            @Override
+            public boolean hasNext() {
+                return point < data.length;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) data[point++];
+            }
+        };
+        return iterator;
     }
 
     public boolean checkIndex(int index) {
-        return index >= 0 && index < this.objects.length;
+        return index >= 0 && index < len;
     }
 }
