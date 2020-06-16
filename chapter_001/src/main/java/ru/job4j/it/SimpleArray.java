@@ -58,6 +58,6 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public boolean checkIndex(int index) {
-        return index >= 0 && index < len;
+        return index >= 0 && index < objects.length;
     }
 }
