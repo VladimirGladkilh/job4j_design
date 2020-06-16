@@ -6,13 +6,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] container = new Object[]{};
-    int modCount = 0;
-    int size = 0;
-
-    public SimpleArray() {
-        this.container = Arrays.copyOf(this.container, size++);;
-    }
+    private Object[] container = new Object[10];
+    private int modCount = 0;
+    private int size = 0;
 
     public T get(int index) {
         if (chechIndex(index)) {
@@ -21,7 +17,9 @@ public class SimpleArray<T> implements Iterable<T> {
         return null;
     }
     public void add(T model) {
-        this.container = Arrays.copyOf(this.container, size++);
+        if (modCount > 10) {
+            this.container = Arrays.copyOf(this.container, size++);
+        }
         this.container[modCount++] = model;
     }
     @Override
@@ -29,16 +27,17 @@ public class SimpleArray<T> implements Iterable<T> {
         return new Iterator<T>()  {
             private int point = 0;
             private final Object[] data = container;
+            private final int size= modCount;
             @Override
             public boolean hasNext() {
-                return point < this.data.length;
+                return point < size;
             }
             @Override
             public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (data.length < container.length) {
+                if (size < modCount) {
                     throw new ConcurrentModificationException();
                 }
                 return (T) this.data[point++];
@@ -46,9 +45,9 @@ public class SimpleArray<T> implements Iterable<T> {
         };
     }
     public boolean chechIndex(int index) {
-        if (index >= this.container.length) {
+        if (index >= modCount) {
             throw new IndexOutOfBoundsException();
         }
-        return index >=0 && index < this.container.length;
+        return index >=0 && index < modCount;
     }
 }
