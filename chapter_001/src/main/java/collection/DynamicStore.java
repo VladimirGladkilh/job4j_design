@@ -1,18 +1,19 @@
 package collection;
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class DynamicStore<E> implements Iterable<E> {
-    int size = 0;
-    int modCount = 0;
-    Node<E> first;
-    Node<E> last;
+    private int size = 0;
+    private int modCount = 0;
+    private int lastIndex = 0;
+    private Node<E> first;
+    private Node<E> last;
 
     private static class Node<E> {
-        E item;
-        Node<E> next;
-        Node<E> prev;
+        private final E item;
+        private Node<E> next;
+        private final Node<E> prev;
 
         public Node(Node<E> prev, E item, Node<E> next) {
             this.item = item;
@@ -26,38 +27,45 @@ public class DynamicStore<E> implements Iterable<E> {
         final Node<E> l = last;
         final Node<E> newNode = new Node<>(l, value, null);
         last = newNode;
-        if (l == null)
+        if (l == null) {
             first = newNode;
-        else
+        } else {
             l.next = newNode;
+        }
         size++;
         modCount++;
     }
 
     public E get(int index) {
         if (checkElement(index)) {
-            if (index < (size >> 1)) {
+            if (index >= lastIndex) {
                 Node<E> x = first;
-                for (int i = 0; i < index; i++)
+                for (int i = lastIndex; i < index; i++) {
                     x = x.next;
+                }
+                lastIndex = index;
                 return x.item;
             } else {
                 Node<E> x = last;
-                for (int i = size - 1; i > index; i--)
+                for (int i = lastIndex - 1; i > index; i--) {
                     x = x.prev;
+                }
+                lastIndex = index;
                 return x.item;
             }
+
         }
         return null;
     }
+
     public boolean checkElement(int index) {
-        return index >= 0 && index <= size;
+        return index >= 0 && index < size;
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private int nextIndex=0;
+            private int nextIndex = 0;
 
             @Override
             public boolean hasNext() {
@@ -73,6 +81,5 @@ public class DynamicStore<E> implements Iterable<E> {
             }
         };
     }
-
 
 }

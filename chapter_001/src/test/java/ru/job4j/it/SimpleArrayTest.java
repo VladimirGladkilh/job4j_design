@@ -31,7 +31,7 @@ public class SimpleArrayTest {
         stringSimpleArray.set(1, "test2");
         stringSimpleArray.set(2, "test3");
         stringSimpleArray.remove(1);
-        assertThat(stringSimpleArray.get(1), isEmptyOrNullString());
+        assertThat(stringSimpleArray.get(1), is("test3"));
     }
 
     @Test
@@ -66,6 +66,7 @@ public class SimpleArrayTest {
         it.next();
         assertThat(it.next(), is("test3"));
     }
+
     @Test(expected = NoSuchElementException.class)
     public void whenNextFromEmpty() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(0);
