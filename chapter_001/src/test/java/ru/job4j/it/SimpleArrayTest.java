@@ -72,7 +72,6 @@ public class SimpleArrayTest {
     @Test(expected = NoSuchElementException.class)
     public void whenNextFromEmpty() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(0);
-
         Iterator<String> it = stringSimpleArray.iterator();
         it.next();
     }

@@ -1,12 +1,14 @@
 package ru.job4j.it;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] objects;
     private int len = 0;
+    private int modCount = 0;
 
     public SimpleArray(int size) {
         this.objects = new Object[size];
@@ -14,20 +16,19 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void add(T model) {
         this.objects[len++] = model;
+        modCount++;
     }
     public void set(int index, T model) {
         if (checkIndex(index)) {
             this.objects[index] = model;
-
+            modCount++;
         }
     }
     public void remove(int index) {
         if (checkIndex(index)) {
-            Object[] copy = Arrays.copyOf(this.objects, this.objects.length - 1);
-            System.arraycopy(this.objects, 0, copy, 0, index);
-            System.arraycopy(this.objects, index + 1, copy, index, copy.length - 1);
-            this.objects = copy;
+            System.arraycopy(this.objects, index + 1, this.objects, index, this.objects.length - index - 1);
             len--;
+            modCount++;
         }
     }
     public T get(int index) {
@@ -43,11 +44,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         Iterator<T> iterator = new Iterator<>() {
             private int point = 0;
-
-            /**
-             * переменная len может быть = 0 поэтому смотрим еще и размер массива
-             * @return
-             */
+            private final int expectedModCount = modCount;
             @Override
             public boolean hasNext() {
                 return point < len;
@@ -57,6 +54,9 @@ public class SimpleArray<T> implements Iterable<T> {
             public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
+                }
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
                 }
                 return (T) objects[point++];
             }
