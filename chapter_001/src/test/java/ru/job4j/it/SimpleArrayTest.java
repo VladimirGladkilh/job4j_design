@@ -19,17 +19,19 @@ public class SimpleArrayTest {
     @Test
     public void testSet() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(3);
-        stringSimpleArray.set(2, "testSet");
-        String res = stringSimpleArray.get(2);
-        assertThat(res, is("testSet"));
-        assertThat(stringSimpleArray.get(0), isEmptyOrNullString());
+        stringSimpleArray.add("testSet");
+        stringSimpleArray.add("testSet2");
+        stringSimpleArray.set(1, "testSet5");
+        String res = stringSimpleArray.get(1);
+        assertThat(res, is("testSet5"));
+        assertThat(stringSimpleArray.get(3), isEmptyOrNullString());
     }
     @Test
     public void testRemove() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(3);
-        stringSimpleArray.set(0, "test1");
-        stringSimpleArray.set(1, "test2");
-        stringSimpleArray.set(2, "test3");
+        stringSimpleArray.add("test1");
+        stringSimpleArray.add("test2");
+        stringSimpleArray.add("test3");
         stringSimpleArray.remove(1);
         assertThat(stringSimpleArray.get(1), is("test3"));
     }
@@ -37,16 +39,16 @@ public class SimpleArrayTest {
     @Test
     public void testCheckIndex() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(3);
-        stringSimpleArray.set(0, "test1");
-        stringSimpleArray.set(1, "test2");
-        stringSimpleArray.set(2, "test3");
+        stringSimpleArray.add("test1");
+        stringSimpleArray.add("test2");
+        stringSimpleArray.add("test3");
         assertThat(stringSimpleArray.get(5), isEmptyOrNullString());
     }
     @Test
     public void testIterator() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(2);
-        stringSimpleArray.set(0, "test4");
-        stringSimpleArray.set(1, "test2");
+        stringSimpleArray.add("test4");
+        stringSimpleArray.add("test2");
         Iterator<String> it = stringSimpleArray.iterator();
         assertThat(it.hasNext(), is(true));
         it.next();
@@ -56,11 +58,11 @@ public class SimpleArrayTest {
     @Test
     public void testIteratorNext() {
         SimpleArray<String> stringSimpleArray = new SimpleArray<>(5);
-        stringSimpleArray.set(0, "test4");
-        stringSimpleArray.set(1, "test2");
-        stringSimpleArray.set(2, "test3");
-        stringSimpleArray.set(3, "test1");
-        stringSimpleArray.set(4, "test");
+        stringSimpleArray.add("test4");
+        stringSimpleArray.add("test2");
+        stringSimpleArray.add("test3");
+        stringSimpleArray.add("test1");
+        stringSimpleArray.add("test");
         Iterator<String> it = stringSimpleArray.iterator();
         it.next();
         it.next();

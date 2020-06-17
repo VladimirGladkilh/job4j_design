@@ -50,7 +50,7 @@ public class SimpleArray<T> implements Iterable<T> {
              */
             @Override
             public boolean hasNext() {
-                return point < len || point < objects.length;
+                return point < len;
             }
 
             @Override
@@ -65,6 +65,6 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public boolean checkIndex(int index) {
-        return index >= 0 && index < this.objects.length;
+        return index >= 0 && index < this.len;
     }
 }
