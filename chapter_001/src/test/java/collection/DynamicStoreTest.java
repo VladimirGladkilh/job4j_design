@@ -1,8 +1,8 @@
 package collection;
 
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
+
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -24,11 +24,11 @@ public class DynamicStoreTest {
         stringDynamicStore.add("123");
         stringDynamicStore.add("234");
         stringDynamicStore.add("345");
-        System.out.println(stringDynamicStore.get(0));
-        System.out.println(stringDynamicStore.get(1));
-        System.out.println(stringDynamicStore.get(2));
-        assertThat(stringDynamicStore.get(2), is("234"));
-        assertThat(stringDynamicStore.get(4), isEmptyOrNullString());
+        stringDynamicStore.add("456");
+        stringDynamicStore.add("567");
+
+        assertThat(stringDynamicStore.get(1), is("234"));
+        assertThat(stringDynamicStore.get(4), is("567"));
     }
 
     @Test

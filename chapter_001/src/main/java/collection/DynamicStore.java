@@ -1,7 +1,6 @@
 package collection;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class DynamicStore<E> implements Iterable<E> {
     private int size = 0;
@@ -9,11 +8,12 @@ public class DynamicStore<E> implements Iterable<E> {
     private int lastIndex = 0;
     private Node<E> first;
     private Node<E> last;
+    private Node<E> lastGet;
 
     private static class Node<E> {
-        private final E item;
+        private E item;
         private Node<E> next;
-        private final Node<E> prev;
+        private Node<E> prev;
 
         public Node(Node<E> prev, E item, Node<E> next) {
             this.item = item;
@@ -36,24 +36,31 @@ public class DynamicStore<E> implements Iterable<E> {
         modCount++;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
+    private Node<E> node(int index) {
+        if (index < (size >> 1)) {
+            Node<E> x = lastGet != null ? lastGet : first;
+
+            for (int i = 0; i < index; i++) {
+                x = x.next;
+            }
+            return x;
+        } else {
+            Node<E> x = lastGet != null ? lastGet : last;
+            for (int i = size - 1; i > index; i--) {
+                x = x.prev;
+            }
+            return x;
+        }
+    }
+
     public E get(int index) {
         if (checkElement(index)) {
-            if (index >= lastIndex) {
-                Node<E> x = first;
-                for (int i = lastIndex; i < index; i++) {
-                    x = x.next;
-                }
-                lastIndex = index;
-                return x.item;
-            } else {
-                Node<E> x = last;
-                for (int i = lastIndex - 1; i > index; i--) {
-                    x = x.prev;
-                }
-                lastIndex = index;
-                return x.item;
-            }
-
+            return node(index).item;
         }
         return null;
     }
@@ -65,19 +72,27 @@ public class DynamicStore<E> implements Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private int nextIndex = 0;
-
+            private Node<E> lastGetted;
+            private Node<E> next = node(0);
+            private int nextIndex;
+            private int expectedModCount = modCount;
             @Override
             public boolean hasNext() {
-                return nextIndex < size;
+                return nextIndex < size && expectedModCount > 0;
             }
 
             @Override
             public E next() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return get(nextIndex++);
+                lastGetted = next;
+                next = next.next;
+                nextIndex++;
+                return lastGetted.item;
             }
         };
     }
