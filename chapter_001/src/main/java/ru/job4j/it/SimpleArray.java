@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] objects;
-    private int len=0;
+    private int len = 0;
 
     public SimpleArray(int size) {
         this.objects = new Object[size];
@@ -23,9 +23,9 @@ public class SimpleArray<T> implements Iterable<T> {
     }
     public void remove(int index) {
         if (checkIndex(index)) {
-            Object[] copy = Arrays.copyOf(this.objects, this.objects.length-1);
+            Object[] copy = Arrays.copyOf(this.objects, this.objects.length - 1);
             System.arraycopy(this.objects, 0, copy, 0, index);
-            System.arraycopy(this.objects, index + 1, copy, index, copy.length-1);
+            System.arraycopy(this.objects, index + 1, copy, index, copy.length - 1);
             this.objects = copy;
             len--;
         }

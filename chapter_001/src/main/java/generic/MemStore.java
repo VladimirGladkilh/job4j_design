@@ -34,7 +34,7 @@ public class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public T findById(String id) {
-        for (T mems : this.mem){
+        for (T mems : this.mem) {
             if (mems.getId().equals(id)) {
                 return mems;
             }
@@ -44,7 +44,7 @@ public class MemStore<T extends Base> implements Store<T> {
 
     private int getIndexById(String id) {
         int index = 0;
-        for (T mems : this.mem){
+        for (T mems : this.mem) {
             if (mems.getId().equals(id)) {
                 return index;
             }

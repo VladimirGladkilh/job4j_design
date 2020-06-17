@@ -50,6 +50,6 @@ public class SimpleArray<T> implements Iterable<T> {
         if (index >= modCount) {
             throw new IndexOutOfBoundsException();
         }
-        return index >=0 && index < modCount;
+        return index >= 0 && index < modCount;
     }
 }

@@ -1,6 +1,6 @@
 package generic;
 
-public class RoleStore implements Store<Role>{
+public class RoleStore implements Store<Role> {
     private final Store<Role> store = new MemStore<>();
 
     @Override

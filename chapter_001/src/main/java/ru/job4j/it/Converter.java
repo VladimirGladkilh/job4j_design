@@ -6,11 +6,11 @@ public class Converter {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
         return new Iterator<Integer>() {
-            private Iterator<Integer> integerIterator= Collections.emptyIterator();
+            private Iterator<Integer> integerIterator = Collections.emptyIterator();
             @Override
             public boolean hasNext() {
                 while (it.hasNext() && !integerIterator.hasNext()) {
-                    integerIterator= it.next();
+                    integerIterator = it.next();
                 }
                 return integerIterator.hasNext();
             }

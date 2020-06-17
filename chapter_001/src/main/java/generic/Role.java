@@ -1,6 +1,6 @@
 package generic;
 
-public class Role extends Base{
+public class Role extends Base {
     public Role(String id) {
         super(id);
     }
