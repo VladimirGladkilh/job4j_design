@@ -54,6 +54,21 @@ public class ForwardLinked<T> implements Iterable<T> {
         size++;
     }
 
+    public void revert() {
+        Node<T> previous = null;
+        Node<T> current = head;
+        Node<T> forward;
+
+        while (current != null) {
+            forward = current.next;
+            current.next = previous;
+            previous = current;
+            current = forward;
+        }
+
+        head = previous;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -75,6 +90,7 @@ public class ForwardLinked<T> implements Iterable<T> {
             }
         };
     }
+
 
     private static class Node<T> {
         T value;
