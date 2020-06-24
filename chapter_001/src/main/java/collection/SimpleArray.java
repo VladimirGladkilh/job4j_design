@@ -18,7 +18,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
     public void add(T model) {
         if (addCount >= this.container.length) {
-            this.container = Arrays.copyOf(this.container, addCount + 1);
+            this.container = Arrays.copyOf(this.container, addCount * 2);
         }
         this.container[addCount++] = model;
         modCount++;
@@ -47,7 +47,7 @@ public class SimpleArray<T> implements Iterable<T> {
         };
     }
     public boolean chechIndex(int index) {
-        if (index >= addCount) {
+        if (index >= addCount || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         return index >= 0 && index < addCount;
