@@ -31,16 +31,17 @@ public class SimpleArray<T> implements Iterable<T> {
             private final int expectedModCount = modCount;
             @Override
             public boolean hasNext() {
-                return point < data.length && expectedModCount > 0;
+                return point < addCount ;
             }
             @Override
             public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
                 return (T) this.data[point++];
             }
         };

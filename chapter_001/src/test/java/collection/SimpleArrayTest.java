@@ -53,7 +53,7 @@ public class SimpleArrayTest {
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {
         SimpleArray<String> array = new SimpleArray<>();
-        array.iterator().next();
+        System.out.println(array.iterator().next());
     }
 
     @Test(expected = ConcurrentModificationException.class)
