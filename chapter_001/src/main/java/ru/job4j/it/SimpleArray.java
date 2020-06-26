@@ -42,7 +42,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> iterator = new Iterator<>() {
+        Iterator<T> iterator = new Iterator<T>() {
             private int point = 0;
             private final int expectedModCount = modCount;
             @Override
