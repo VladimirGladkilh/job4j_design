@@ -10,23 +10,8 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class SimpleSetTest  {
-    @Test
-    public void testGet() {
-        SimpleSet<String> strings = new SimpleSet<>();
-        strings.add("first");
-        strings.add("second");
-        strings.add("third");
-        assertThat(strings.get(1), is("second"));
-    }
-    @Test
-    public void testAdd() {
-        SimpleSet<String> strings = new SimpleSet<>();
-        for (int i = 0; i < 15; i++) {
-            strings.add("Value" + i);
-        }
-        String rsl = strings.get(13);
-        assertThat(rsl, is("Value13"));
-    }
+
+
     @Test
     public void testIterator() {
         SimpleSet<String> strings = new SimpleSet<>();
@@ -46,17 +31,13 @@ public class SimpleSetTest  {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void whenGetEmpty() {
-        SimpleSet<String> strings = new SimpleSet<>();
-        strings.get(0);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void whenGetOutBound() {
+    public void NullValue() {
         SimpleSet<String> strings = new SimpleSet<>();
         strings.add("first");
-        strings.get(1);
+        strings.add(null);
+        assertThat(strings.checkIndex(1), is(true));
     }
+
 
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {

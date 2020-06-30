@@ -7,24 +7,22 @@ public class SimpleSet<E> implements Iterable<E> {
     private int modCount = 0;
     private int addCount = 0;
 
-    public E get(int index) {
-        if (checkIndex(index)) {
-            return this.container.get(index);
-        }
-        return null;
-    }
-
     public int getSize() {
         return addCount;
     }
 
     private boolean find(E model) {
-        for (E mod:this.container) {
-            if (mod.equals(model)) {
-                return true;
+        if (Objects.nonNull(model)) {
+            for (E mod : this.container) {
+                if (mod.equals(model)) {
+                    return true;
+                }
             }
+            return false;
+        } else {
+            return true;
         }
-        return false;
+
     }
     public void add(E model) {
         if (!find(model)) {
