@@ -55,12 +55,12 @@ public class SimpleSetTest  {
         it.next();
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testCheckDouble() {
         SimpleSet<String> strings = new SimpleSet<>();
         strings.add("first");
         strings.add("second");
         strings.add("second");
-        assertThat(strings.getSize(), is(2));
+        assertThat(strings.checkIndex(2), is(false));
     }
 }
