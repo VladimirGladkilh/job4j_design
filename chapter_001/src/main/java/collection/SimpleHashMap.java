@@ -2,181 +2,218 @@ package collection;
 
 import java.util.*;
 
-public class SimpleHashMap<K, V> implements Iterable<V> {
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
-    private int size = 0;
-
-    public static class Node<K, V> {
-        private final K key;
-        private final V value;
-
-        Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public final String toString() {
-            return key + "=" + value;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            Node<?, ?> node = (Node<?, ?>) o;
-            return Objects.equals(key, node.key);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(key, value);
-        }
-    }
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     private Node<K, V>[] table;
+    private Node<K,V> next;
+    private Node<K,V> current;
+    private int count;
 
-    private static int hash(Object key) {
-        int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    private int threshold;
+
+    private float loadFactor;
+
+    private transient int modCount = 0;
+
+
+
+    public SimpleHashMap(int startSize, float loadFactor) {
+        this.loadFactor = loadFactor;
+        table = new Node[startSize];
+        threshold = (int)Math.min(startSize * loadFactor, MAX_ARRAY_SIZE + 1);
     }
 
     public SimpleHashMap() {
-        this.table = new Node[16];
+        this(11, 0.75f);
     }
 
-    /**
-     * Определяет индекс в массиве по хешу ключа
-     *
-     * @param hash хеш ключа
-     * @return индекс в масссиве
-     */
-    private int indexFor(int hash) {
-        return hash & (table.length - 1);
-    }
 
-    /**
-     * Увеличивает размер массив Node[]
-     *
-     * @param size новый размер массива
-     */
-    private void resize(int size) {
-        System.out.println("table.length = " + table.length + " size=" +size);
-        Node<K, V>[] oldTab = table;
-        table = new Node[size];
-        for (Node<K, V> node : oldTab) {
-            if (node != null) {
-                K key = node.key;
-                V value = node.value;
-                int hash = hash(key);
-                int index = indexFor(hash);
-                table[index] = new Node<>(key, value);
-                System.out.println("index= "+ index + " key="+ key + " value=" + value);
-            }
-        }
-    }
-
-    /**
-     * Вставка значения.
-     * По одинаковым ключам перезаписвает значение
-     * @param key   ключ
-     * @param value значение
-     */
-    public void insert(K key, V value) {
-        if (size == table.length) {
-            resize(size * 2);
-        }
-        int hash = hash(key);
-        int index = indexFor(hash);
-        Node<K, V> oldVal = table[index];
-        if (oldVal == null) {
-            table[index] = new Node<>(key, value);
-            size++;
-        } else {
-            if (oldVal.key.equals(key)) {
-                table[index] = new Node<>(key, value);
-            }
-        }
-        System.out.println("Size >> " +size + " index >>" + index);
-    }
-
-    /**
-     * Получение значения по ключу
-     * @param key ключ
-     * @return значение по ключу
-     */
-    public V get(K key) {
-        int hash = hash(key);
-        int index = indexFor(hash);
-        V value = null;
-        Node<K, V> node = table[index];
-        if (node != null) {
-            if ((node.key == null && key == null) || (node.key != null && node.key.equals(key))) {
-                value = node.value;
-            }
-        }
-        return value;
-    }
-
-    /**
-     * Удаление значения по ключу
-     *
-     * @param key ключ
-     * @return результат удаления
-     */
-    public boolean delete(K key) {
-        boolean result = false;
-        if (table.length > 0) {
-            int hash = hash(key);
-            int index = indexFor(hash);
-            Node<K, V> node = table[index];
-            if (node != null && key.equals(node.key)) {
-                table[index] = null;
-                result = true;
-                size--;
-            }
-        }
-        return result;
-    }
 
     @Override
-    public Iterator<V> iterator() {
-        return new Iterator<>() {
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                boolean hasNext = false;
-                if (index < table.length) {
-                    Node<K, V> node;
-                    do {
-                        node = table[index++];
-                    }
-                    while (node == null && index < table.length);
-                    hasNext = (node != null);
-                    index--;
-                }
-                return hasNext;
-            }
-
-            @Override
-            public V next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return table[index++].value;
-            }
-        };
+    public Iterator<Node<K, V>> iterator() {
+        return new smIterator();
     }
 
-    public int getSize() {
-        return size;
+    private class smIterator implements Iterator<Node<K, V>> {
+        Node<K,V> next;        // next entry to return
+        Node<K,V> current;     // current entry
+        int expectedModCount;  // for fast-fail
+        int index;             // current slot
+
+        public smIterator() {
+            expectedModCount = modCount;
+            Node<K,V>[] t = table;
+            current = next = null;
+            index = 0;
+            if (t != null && count > 0) { // advance to first entry
+                do {} while (index < t.length && (next = t[index++]) == null);
+            }
+        }
+
+        public boolean hasNext() {
+            return next != null;
+        }
+
+        public Node<K, V> next() {
+            Node<K,V>[] t;
+            Node<K,V> e = next;
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if (e == null)
+                throw new NoSuchElementException();
+            if ((next = (current = e).next) == null && (t = table) != null) {
+                do {} while (index < t.length && (next = t[index++]) == null);
+            }
+            return e;
+        }
     }
 
-    public Node<K, V>[] getTable() {
-        return table;
+
+
+    public static class Node<K, V> {
+        final int hash;
+        final K key;
+        V value;
+        Node<K,V> next;
+
+        protected Node(int hash, K key, V value, Node<K,V> next) {
+            this.hash = hash;
+            this.key =  key;
+            this.value = value;
+            this.next = next;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public V setValue(V value) {
+            if (value == null)
+                throw new NullPointerException();
+            V oldValue = this.value;
+            this.value = value;
+            return oldValue;
+        }
+/*
+        public boolean equals(Object o) {
+            if (!(o instanceof Map.Entry))
+                return false;
+            Node<K, V> e = (Node<K, V>)o;
+
+            return (key==null ? e.getKey()==null : key.equals(e.getKey())) &&
+                    (value==null ? e.getValue()==null : value.equals(e.getValue()));
+        }
+
+        public int hashCode() {
+            return hash ^ Objects.hashCode(value);
+        }*/
+
+        public String toString() {
+            return key.toString()+"="+value.toString();
+        }
+    }
+
+
+    public V get(Object key) {
+        Node<K, V> tab[] = table;
+        int hash = key.hashCode();
+        int index = (hash & 0x7FFFFFFF) % tab.length;
+        for (Node<K, V> e = tab[index]; e != null ; e = e.next) {
+            if ((e.hash == hash) && e.key.equals(key)) {
+                return (V)e.value;
+            }
+        }
+        return null;
+    }
+
+    public boolean delete(K key) {
+        Node<K, V> tab[] = table;
+        int hash = key.hashCode();
+        int index = (hash & 0x7FFFFFFF) % tab.length;
+        Node<K, V> e = tab[index];
+        for(Node<K, V> prev = null; e != null ; prev = e, e = e.next) {
+            if ((e.hash == hash) && e.key.equals(key)) {
+                if (prev != null) {
+                    prev.next = e.next;
+                } else {
+                    tab[index] = e.next;
+                }
+                modCount++;
+                count--;
+                e.value = null;
+                return true;
+            }
+        }
+        return false;
+    };
+
+    public boolean insert(K key, V value) {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+
+        Node<K, V> tab[] = table;
+        int hash = key.hashCode();
+        int index = (hash & 0x7FFFFFFF) % tab.length;
+
+        Node<K, V> node = tab[index];
+        for(; node != null ; node = node.next) {
+            if ((node.hash == hash) && node.key.equals(key)) {
+                //перезатираем
+                node.value = value;
+                return false;
+            }
+        }
+
+        //Node<K, V> tab[] = table;
+        if (count >= threshold) {
+            rehash();
+            tab = table;
+            hash = key.hashCode();
+            index = (hash & 0x7FFFFFFF) % tab.length;
+        }
+
+        Node<K, V> e = tab[index];
+        tab[index] = new Node<>(hash, key, value, e);
+        count++;
+        modCount++;
+
+        return true;
+    }
+
+    private void rehash() {
+        int oldCapacity = table.length;
+        Node<K, V>[] oldMap = table;
+
+        // overflow-conscious code
+        int newCapacity = (oldCapacity << 1) + 1;
+        if (newCapacity - MAX_ARRAY_SIZE > 0) {
+            if (oldCapacity == MAX_ARRAY_SIZE)
+                // Keep running with MAX_ARRAY_SIZE buckets
+                return;
+            newCapacity = MAX_ARRAY_SIZE;
+        }
+        Node<K, V>[] newMap = new Node[newCapacity];
+
+        modCount++;
+        threshold = (int)Math.min(newCapacity * loadFactor, MAX_ARRAY_SIZE + 1);
+        table = newMap;
+
+        for (int i = oldCapacity ; i-- > 0 ;) {
+            for (Node<K, V> old = oldMap[i]; old != null ; ) {
+                Node<K, V> e = old;
+                old = old.next;
+
+                int index = (e.hash & 0x7FFFFFFF) % newCapacity;
+                e.next = newMap[index];
+                newMap[index] = e;
+            }
+        }
     }
 }

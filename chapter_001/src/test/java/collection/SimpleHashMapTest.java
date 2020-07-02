@@ -6,6 +6,9 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class SimpleHashMapTest {
 
     @Test
@@ -26,6 +29,7 @@ public class SimpleHashMapTest {
         simpleHashMap.insert("first","2");
         assertThat(simpleHashMap.get("first"), is("2"));
         assertThat(simpleHashMap.get("four"), is(nullValue()));
+
     }
 
     @Test
@@ -38,20 +42,38 @@ public class SimpleHashMapTest {
         assertThat(simpleHashMap.delete("second"), is(true));
         assertThat(simpleHashMap.delete("four"), is(false));
     }
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testIterator() {
         SimpleHashMap<String, String> simpleHashMap = new SimpleHashMap<>();
         simpleHashMap.insert("first","First");
         simpleHashMap.insert("second","Second");
         simpleHashMap.insert("third","Third");
         simpleHashMap.insert("first","2");
-        for (String s : simpleHashMap) {
-            System.out.println(s);
+        for (SimpleHashMap.Node s : simpleHashMap) {
+            System.out.println(s.toString());
         }
-        simpleHashMap.iterator().next();
-        simpleHashMap.iterator().next();
-        simpleHashMap.iterator().next();
-        simpleHashMap.iterator().next();
+        Iterator<SimpleHashMap.Node<String, String>> iterator = simpleHashMap.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        SimpleHashMap.Node<String, String> node = iterator.next();
+        assertThat(node.getValue(), is("Second"));
+    }
+    @Test
+    public void testIterator2() {
+        SimpleHashMap<String, String> simpleHashMap = new SimpleHashMap<>();
+        simpleHashMap.insert("first","First");
+        simpleHashMap.insert("second","Second");
+        simpleHashMap.insert("third","Third");
+        simpleHashMap.insert("first","2");
+        for (SimpleHashMap.Node s : simpleHashMap) {
+            System.out.println(s.toString());
+        }
+        Iterator<SimpleHashMap.Node<String, String>> iterator = simpleHashMap.iterator();
+        iterator.next();
+        iterator.next();
+        SimpleHashMap.Node<String, String> node = iterator.next();
+        assertThat(node.getValue(), is("Second"));
     }
     @Test
     public void testMillionRecords() {
@@ -59,20 +81,7 @@ public class SimpleHashMapTest {
         for (int i = 0; i < 1000; i++) {
             simpleHashMap.insert(String.valueOf(i), "Value" + i);
         }
+        assertThat(simpleHashMap.get(String.valueOf(919)), is("Value919"));
+    }
 
-        assertThat(simpleHashMap.get(String.valueOf(999)), is("Value998"));
-    }
-    private static int hash(Object key) {
-        int h;
-        if (key == null) {
-            h = 0;
-        } else {
-            h = key.hashCode();
-            h = h ^ (h >>> 16);
-        }
-        return h;
-    }
-    private int indexFor(int hash) {
-        return hash & (15);
-    }
 }
