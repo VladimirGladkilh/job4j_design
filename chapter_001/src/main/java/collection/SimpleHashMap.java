@@ -6,7 +6,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     private int size = 0;
 
-    private static class Node<K, V> {
+    public static class Node<K, V> {
         private final K key;
         private final V value;
 
@@ -18,23 +18,34 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         public final String toString() {
             return key + "=" + value;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Node<?, ?> node = (Node<?, ?>) o;
+            return Objects.equals(key, node.key);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key, value);
+        }
     }
 
     private Node<K, V>[] table;
 
     private static int hash(Object key) {
         int h;
-        if (key == null) {
-            h = 0;
-        } else {
-            h = key.hashCode();
-            h = h ^ (h >>> 16);
-        }
-        return h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
 
     public SimpleHashMap() {
-        table = new Node[16];
+        this.table = new Node[16];
     }
 
     /**
@@ -53,6 +64,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
      * @param size новый размер массива
      */
     private void resize(int size) {
+        System.out.println("table.length = " + table.length + " size=" +size);
         Node<K, V>[] oldTab = table;
         table = new Node[size];
         for (Node<K, V> node : oldTab) {
@@ -62,6 +74,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                 int hash = hash(key);
                 int index = indexFor(hash);
                 table[index] = new Node<>(key, value);
+                System.out.println("index= "+ index + " key="+ key + " value=" + value);
             }
         }
     }
@@ -87,6 +100,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                 table[index] = new Node<>(key, value);
             }
         }
+        System.out.println("Size >> " +size + " index >>" + index);
     }
 
     /**
@@ -156,5 +170,13 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                 return table[index++].value;
             }
         };
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Node<K, V>[] getTable() {
+        return table;
     }
 }
