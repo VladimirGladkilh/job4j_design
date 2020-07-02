@@ -1,7 +1,6 @@
 package collection;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class User {
@@ -17,12 +16,16 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return children == user.children &&
-                name.equals(user.name) &&
-                birthday.equals(user.birthday);
+        return children == user.children
+                && name.equals(user.name)
+                && birthday.equals(user.birthday);
     }
 
     @Override

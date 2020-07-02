@@ -1,19 +1,18 @@
 package generic;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class RoleStoreTest extends TestCase {
+public class RoleStoreTest {
     @Test
     public void testAdd() {
         RoleStore roleStore = new RoleStore();
         roleStore.add(new Role("first"));
         roleStore.add(new Role("second"));
     }
-
+    @Test
     public void testReplace() {
         RoleStore roleStore = new RoleStore();
         roleStore.add(new Role("first"));
@@ -23,7 +22,7 @@ public class RoleStoreTest extends TestCase {
         assertThat(roleStore.findById("first"), is(nullValue()));
         assertThat(roleStore.findById("Replace"), is(replacer));
     }
-
+    @Test
     public void testDelete() {
         RoleStore roleStore = new RoleStore();
         roleStore.add(new Role("first"));
@@ -31,7 +30,7 @@ public class RoleStoreTest extends TestCase {
         roleStore.delete("first");
         assertThat(roleStore.findById("first"), is(nullValue()));
     }
-
+    @Test
     public void testFindById() {
         RoleStore roleStore = new RoleStore();
         roleStore.add(new Role("first"));

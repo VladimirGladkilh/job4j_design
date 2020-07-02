@@ -3,7 +3,7 @@ package collection;
 import java.util.*;
 
 public class SimpleSet<E> implements Iterable<E> {
-    private SimpleArray<E> container = new SimpleArray<E>();
+    private final SimpleArray<E> container = new SimpleArray<>();
 
     private boolean find(E model) {
             for (E mod : this.container) {
@@ -14,7 +14,7 @@ public class SimpleSet<E> implements Iterable<E> {
             return false;
     }
     public void add(E model) {
-        if (model !=null && !find(model)) {
+        if (model != null && !find(model)) {
             this.container.add(model);
         }
     }

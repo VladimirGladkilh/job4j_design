@@ -10,11 +10,10 @@ import java.util.NoSuchElementException;
 public class ArrayItTest {
 
     @Test
-    public void whenMultiCallhasNextThenTrue() {
+    public void whenMultiCallHasNextThenTrue() {
         ArrayIt it = new ArrayIt(
                 new int[] {1, 2, 3}
         );
-        assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
     }
 

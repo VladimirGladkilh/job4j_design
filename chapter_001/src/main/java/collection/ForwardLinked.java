@@ -1,7 +1,6 @@
 package collection;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
@@ -17,10 +16,11 @@ public class ForwardLinked<T> implements Iterable<T> {
         T res = head.value;
         Node<T> next = head.next;
         head = next;
-        if (next == null)
+        if (next == null) {
             last = null;
-        else
+        } else {
             next.prev = null;
+        }
         size--;
         return res;
 
@@ -34,14 +34,16 @@ public class ForwardLinked<T> implements Iterable<T> {
         Node<T> prev = last.prev;
 
         last = prev;
-        if (prev == null)
+        if (prev == null) {
             head = null;
-        else
+        } else {
             prev.next = null;
+        }
         size--;
         return res;
 
     }
+
     public void add(T value) {
         Node<T> l = last;
         Node<T> newNode = new Node<>(l, value, null);
@@ -71,7 +73,7 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             Node<T> node = head;
 
             @Override
@@ -93,9 +95,10 @@ public class ForwardLinked<T> implements Iterable<T> {
 
 
     private static class Node<T> {
-        T value;
+        final T value;
         Node<T> next;
         Node<T> prev;
+
         public Node(Node<T> prev, T value, Node<T> next) {
             this.prev = prev;
             this.value = value;

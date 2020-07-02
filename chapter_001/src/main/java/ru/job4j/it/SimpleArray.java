@@ -1,12 +1,11 @@
 package ru.job4j.it;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
-    private Object[] objects;
+    private final Object[] objects;
     private int len = 0;
     private int modCount = 0;
 
@@ -42,9 +41,10 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> iterator = new Iterator<T>() {
+        return new Iterator<>() {
             private int point = 0;
             private final int expectedModCount = modCount;
+
             @Override
             public boolean hasNext() {
                 return point < len;
@@ -61,7 +61,6 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) objects[point++];
             }
         };
-        return iterator;
     }
 
     public boolean checkIndex(int index) {

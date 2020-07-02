@@ -11,11 +11,10 @@ public class BackwardArrayItTest {
 
 
     @Test
-    public void whenMultiCallhasNextThenTrue() {
+    public void whenMultiCallHasNextThenTrue() {
         BackwardArrayIt it = new BackwardArrayIt(
                 new int[] {1, 2, 3}
         );
-        assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
     }
 

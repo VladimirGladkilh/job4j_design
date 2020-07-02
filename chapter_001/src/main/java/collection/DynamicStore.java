@@ -5,15 +5,15 @@ import java.util.*;
 public class DynamicStore<E> implements Iterable<E> {
     private int size = 0;
     private int modCount = 0;
-    private int lastIndex = 0;
+    private final int lastIndex = 0;
     private Node<E> first;
     private Node<E> last;
     private Node<E> lastGet;
 
     private static class Node<E> {
-        private E item;
+        private final E item;
         private Node<E> next;
-        private Node<E> prev;
+        private final Node<E> prev;
 
         public Node(Node<E> prev, E item, Node<E> next) {
             this.item = item;
@@ -38,24 +38,24 @@ public class DynamicStore<E> implements Iterable<E> {
 
     /**
      *
-     * @param index
-     * @return
+     * @param index индекс
+     * @return нода
      */
     private Node<E> node(int index) {
+        Node<E> x;
         if (index < (size >> 1)) {
-            Node<E> x = lastGet != null ? lastGet : first;
+            x = lastGet != null ? lastGet : first;
 
             for (int i = 0; i < index; i++) {
                 x = x.next;
             }
-            return x;
         } else {
-            Node<E> x = lastGet != null ? lastGet : last;
+            x = lastGet != null ? lastGet : last;
             for (int i = size - 1; i > index; i--) {
                 x = x.prev;
             }
-            return x;
         }
+        return x;
     }
 
     public E get(int index) {
@@ -71,11 +71,11 @@ public class DynamicStore<E> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private Node<E> lastGetted;
+        return new Iterator<>() {
             private Node<E> next = node(0);
             private int nextIndex;
-            private int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
+
             @Override
             public boolean hasNext() {
                 return nextIndex < size && expectedModCount > 0;
@@ -89,10 +89,10 @@ public class DynamicStore<E> implements Iterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                lastGetted = next;
+                Node<E> lastGetting = next;
                 next = next.next;
                 nextIndex++;
-                return lastGetted.item;
+                return lastGetting.item;
             }
         };
     }

@@ -1,7 +1,7 @@
 package collection;
 
 public class SimpleStack<T> {
-    private ForwardLinked<T> linked = new ForwardLinked<T>();
+    private final ForwardLinked<T> linked = new ForwardLinked<>();
     private int size = 0;
 
     public int getSize() {
@@ -15,7 +15,6 @@ public class SimpleStack<T> {
     public T pull() {
         size--;
         return linked.deleteFirst();
-
     }
 
     public void push(T value) {

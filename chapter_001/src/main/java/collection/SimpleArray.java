@@ -25,14 +25,16 @@ public class SimpleArray<T> implements Iterable<T> {
     }
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>()  {
+        return new Iterator<>() {
             private int point = 0;
             private final Object[] data = container;
             private final int expectedModCount = modCount;
+
             @Override
             public boolean hasNext() {
-                return point < addCount ;
+                return point < addCount;
             }
+
             @Override
             public T next() {
                 if (expectedModCount != modCount) {
@@ -50,6 +52,6 @@ public class SimpleArray<T> implements Iterable<T> {
         if (index >= addCount || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        return index >= 0 && index < addCount;
+        return true;
     }
 }

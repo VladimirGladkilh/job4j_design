@@ -5,8 +5,9 @@ import java.util.*;
 public class Converter {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
-        return new Iterator<Integer>() {
+        return new Iterator<>() {
             private Iterator<Integer> integerIterator = Collections.emptyIterator();
+
             @Override
             public boolean hasNext() {
                 while (it.hasNext() && !integerIterator.hasNext()) {
