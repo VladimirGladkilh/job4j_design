@@ -14,7 +14,7 @@ public class SimpleSet<E> implements Iterable<E> {
             return false;
     }
     public void add(E model) {
-        if (model != null && !find(model)) {
+        if (!find(model)) {
             this.container.add(model);
         }
     }
