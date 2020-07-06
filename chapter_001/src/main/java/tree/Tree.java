@@ -7,22 +7,13 @@ import java.util.Queue;
 
 class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
-
+    private boolean isBinTree = true;
     Tree(final E root) {
         this.root = new Node<>(root);
     }
 
     public boolean isBinary() {
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (el.children.size() > 2) {
-                return false;
-            }
-            data.addAll(el.children);
-        }
-        return true;
+        return isBinTree;
     }
 
 
@@ -34,6 +25,9 @@ class Tree<E> implements SimpleTree<E> {
         Optional<Node<E>> findChild = findBy(child);
         if (findParent.isPresent() && !findChild.isPresent()) {
             findParent.get().children.add(new Node<>(child));
+            if (findParent.get().children.size() > 2){
+                this.isBinTree = false;
+            }
             rsl = true;
         }
         return rsl;
