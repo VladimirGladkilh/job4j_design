@@ -31,15 +31,10 @@ class Tree<E> implements SimpleTree<E> {
         boolean rsl = false;
 
         Optional<Node<E>> findParent = findBy(parent);
-        if (findParent != null) {
-            Node<E> newNode = new Node<>(child);
-
-            Node<E> node = findParent.get();
-            List<Node<E>> nodeList = node.children;
-            if (nodeList.indexOf(newNode) < 0) {
-                nodeList.add(newNode);
-                rsl = true;
-            }
+        Optional<Node<E>> findChild = findBy(child);
+        if (findParent.isPresent() && !findChild.isPresent()) {
+            findParent.get().children.add(new Node<>(child));
+            rsl = true;
         }
         return rsl;
     }
