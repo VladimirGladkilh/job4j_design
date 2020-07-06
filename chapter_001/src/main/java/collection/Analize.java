@@ -1,28 +1,38 @@
 package collection;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        for (User user: previous
+        Map<Integer, User> prevUserMap = new HashMap<>();
+
+        for (User user : previous) {
+            prevUserMap.put(user.id, user);
+        }
+        Map<Integer, User> currentUserMap = new HashMap<>();
+        for (User currentUser: current
              ) {
-            int index = current.indexOf(user);
-            if (index < 0) {
-                info.setDeleted();
-            } else {
-                User cUser = current.get(index);
-                if (cUser.hashCode() != user.hashCode()) {
-                    info.setChanged();
-                }
-            }
-        }
-        for (User cUser: current) {
-            if (previous.indexOf(cUser) < 0) {
+            Optional<User> testPrevUserMap = Optional.ofNullable(prevUserMap.putIfAbsent(currentUser.id, currentUser));
+            if (testPrevUserMap.isEmpty()) {
                 info.setAdded();
+            } else if (!testPrevUserMap.get().name.equals(currentUser.name)) {
+                info.setChanged();
+            }
+            currentUserMap.put(currentUser.id, currentUser);
+        }
+        //for deleted
+        for (User prevUser : previous) {
+            Optional<User> testCurrUserMap = Optional.ofNullable(currentUserMap.putIfAbsent(prevUser.id, prevUser));
+            if (testCurrUserMap.isEmpty()) {
+                info.setDeleted();
             }
         }
+
         return info;
 
     }
@@ -106,7 +116,7 @@ public class Analize {
         }
 
         public void setDeleted() {
-            this.deleted++;
+            this.deleted ++;
         }
 
         @Override

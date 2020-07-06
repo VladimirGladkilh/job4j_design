@@ -74,4 +74,27 @@ public class AnalizeTest  {
         assertThat(info.getDeleted(), is(3));
 
     }
+
+    @Test
+    public void testDiffSomaSize2() {
+        List<Analize.User> previous = new LinkedList<>(List.of(
+                new Analize.User(1, "Vasya"),
+                new Analize.User(2, "Petya"),
+                new Analize.User(3, "Zina")
+        ));
+        List<Analize.User> curent = new LinkedList<>(List.of(
+                new Analize.User(1, "Vasya"),
+                new Analize.User(2, "Petya"),
+                new Analize.User(3, "Masha"),
+                new Analize.User(4, "Kiril"),
+                new Analize.User(5, "Ivan"),
+                new Analize.User(6, "Kate")
+        ));
+        Analize analize = new Analize();
+        Analize.Info info = analize.diff(previous, curent);
+        assertThat(info.getAdded(), is(3));
+        assertThat(info.getChanged(), is(1));
+        assertThat(info.getDeleted(), is(0));
+
+    }
 }
