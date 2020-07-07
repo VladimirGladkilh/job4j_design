@@ -15,23 +15,21 @@ public class Analize {
             prevUserMap.put(user.id, user);
         }
         Map<Integer, User> currentUserMap = new HashMap<>();
+        int add = 0;
+        int change = 0;
         for (User currentUser: current
              ) {
             Optional<User> testPrevUserMap = Optional.ofNullable(prevUserMap.putIfAbsent(currentUser.id, currentUser));
             if (testPrevUserMap.isEmpty()) {
-                info.setAdded();
+                add++;
             } else if (!testPrevUserMap.get().name.equals(currentUser.name)) {
-                info.setChanged();
+                change++;
             }
-            currentUserMap.put(currentUser.id, currentUser);
+            prevUserMap.remove(currentUser.id);
         }
-        //for deleted
-        for (User prevUser : previous) {
-            Optional<User> testCurrUserMap = Optional.ofNullable(currentUserMap.putIfAbsent(prevUser.id, prevUser));
-            if (testCurrUserMap.isEmpty()) {
-                info.setDeleted();
-            }
-        }
+        info.setAdded(add);
+        info.setDeleted(prevUserMap.size());
+        info.setChanged(change);
 
         return info;
 
@@ -99,24 +97,24 @@ public class Analize {
             return added;
         }
 
-        public void setAdded() {
-            this.added ++;
+        public void setAdded(int added) {
+            this.added = added;
         }
 
         public int getChanged() {
             return changed;
         }
 
-        public void setChanged() {
-            this.changed ++;
+        public void setChanged(int changed) {
+            this.changed = changed;
         }
 
         public int getDeleted() {
             return deleted;
         }
 
-        public void setDeleted() {
-            this.deleted ++;
+        public void setDeleted(int deleted) {
+            this.deleted = deleted;
         }
 
         @Override

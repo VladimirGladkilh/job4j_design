@@ -35,7 +35,7 @@ public class SimpleSetTest  {
         SimpleSet<String> strings = new SimpleSet<>();
         strings.add("first");
         strings.add(null);
-        assertThat(strings.checkIndex(1), is(true));
+        assertThat(strings.checkIndex(2), is(true));
     }
 
 
