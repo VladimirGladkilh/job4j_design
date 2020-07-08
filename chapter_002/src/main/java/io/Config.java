@@ -8,17 +8,21 @@ import java.util.StringJoiner;
 
 public class Config {
     private final String path;
-    private final Map<String, String> values = new HashMap<String, String>();
+    private final Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
     }
 
+    /**
+     * проверяем arr[0].charAt(0) != '#' т.к. параметр может быть закоментирован
+     */
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(s -> {
-                if (s.length() > 0 && s.charAt(0) != '#' && s.indexOf("=") > 0) {
-                    values.put(s.split("=")[0].trim(), s.split("=")[1].trim());
+                String[] arr = s.split("=");
+                if (arr.length > 0 && arr[0].charAt(0) != '#') {
+                    values.put(arr[0].trim(), arr[1].trim());
                 }
             });
         } catch (Exception e) {
