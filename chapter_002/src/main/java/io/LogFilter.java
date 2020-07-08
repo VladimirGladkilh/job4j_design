@@ -10,14 +10,12 @@ public class LogFilter {
     public static List<String> filter(String file) {
         List<String> res = new LinkedList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            List<String> lines = new ArrayList<String>();
-            in.lines().forEach(lines::add);
-            for (String line : lines) {
-                int lineLength = line.split(" ").length;
-                if (line.split(" ")[lineLength - 2].equals("404")) {
-                    res.add(line);
+            in.lines().forEach(s -> {
+                int lineLength = s.split(" ").length;
+                if (s.split(" ")[lineLength - 2].equals("404")) {
+                    res.add(s);
                 }
-            }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

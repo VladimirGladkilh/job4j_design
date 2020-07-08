@@ -8,11 +8,7 @@ import java.util.List;
 public class ReadFile {
     public static void main(String[] args) {
         try (BufferedReader in = new BufferedReader(new FileReader("input.txt"))) {
-            List<String> lines = new ArrayList<String>();
-            in.lines().forEach(lines::add);
-            for (String line : lines) {
-                System.out.println(line);
-            }
+            in.lines().forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }
