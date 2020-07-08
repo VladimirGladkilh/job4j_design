@@ -14,32 +14,36 @@ public class Analizy {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            List<String> lines = new ArrayList<String>();
-            in.lines().forEach(lines::add);
-            String start = "";
-            String stop;
-            for (String line : lines) {
-                String status = line.split(" ")[0];
-                String time = line.split(" ")[1];
-                if ((status.equals("400") || status.equals("500")) && start.equals("")) {
-                    start = time;
+            String[] start = {""};
+            String[] stop = new String[1];
+            in.lines().forEach(s -> {
+                String status = s.split(" ")[0];
+                String time = s.split(" ")[1];
+                if ((status.equals("400") || status.equals("500"))) {
+                    if (start[0].equals("")) {
+                        start[0] = time;
+                    }
+                } else {
+                    stop[0] = time;
+                    if (!start[0].equals("")) { //чтобы не писать в лог с пустой датой старта
+                        sj.add(start[0] + "; " + stop[0]);
+                    }
+                    start[0] = "";
                 }
-                if ((!status.equals("400") && !status.equals("500")) && !start.equals("")) {
-                    stop = time;
-                    sj.add(start + "; " + stop);
-                    start = "";
-                }
-            }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try (FileOutputStream out = new FileOutputStream(target)) {
-            out.write(sj.toString().getBytes());
+        writeTarget(sj.toString(), target);
+    }
+
+    private void writeTarget(String data, String fileName) {
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
+            out.write(data.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public static void main(String[] args) {
         try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
             out.println("15:01:30;15:02:32");
@@ -47,6 +51,5 @@ public class Analizy {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

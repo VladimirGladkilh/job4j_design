@@ -3,11 +3,7 @@ package io;
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -37,7 +33,6 @@ public class AnalizyTest {
         String find = "";
         try (BufferedReader in = new BufferedReader(new FileReader(out))) {
             find = in.lines().reduce((first, second) -> second).orElse("");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
