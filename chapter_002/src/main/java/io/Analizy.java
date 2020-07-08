@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.StringJoiner;
 
 public class Analizy {
@@ -15,7 +12,6 @@ public class Analizy {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             String[] start = {""};
-            String[] stop = new String[1];
             in.lines().forEach(s -> {
                 String status = s.split(" ")[0];
                 String time = s.split(" ")[1];
@@ -24,9 +20,8 @@ public class Analizy {
                         start[0] = time;
                     }
                 } else {
-                    stop[0] = time;
                     if (!start[0].equals("")) { //чтобы не писать в лог с пустой датой старта
-                        sj.add(start[0] + "; " + stop[0]);
+                        sj.add(start[0] + "; " + time);
                     }
                     start[0] = "";
                 }
