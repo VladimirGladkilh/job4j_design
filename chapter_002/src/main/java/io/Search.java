@@ -20,8 +20,7 @@ public class Search {
 
     public static List<Path> search(Path root, String ext) throws IOException {
 
-        SearchFiles searcher = new SearchFiles();
-        searcher.ext = ext;
+        SearchFiles searcher = new SearchFiles(path -> path.toFile().getName().endsWith(ext));
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
 

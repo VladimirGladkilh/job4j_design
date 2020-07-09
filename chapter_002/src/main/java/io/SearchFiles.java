@@ -11,16 +11,21 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class SearchFiles  implements FileVisitor<Path>{
+    private Predicate<Path> searchString;
 
-    String ext;
-    List<Path> pathList = new LinkedList<>();
+    private List<Path> pathList = new LinkedList<>();
 
     public List<Path> getPaths() {
         return pathList;
+    }
+
+    public SearchFiles(Predicate<Path> searchString) {
+        this.searchString = searchString;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class SearchFiles  implements FileVisitor<Path>{
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if (file.toFile().getName().endsWith(this.ext)) {
+        if (searchString.test(file)){
             pathList.add(file);
         }
         return CONTINUE;
