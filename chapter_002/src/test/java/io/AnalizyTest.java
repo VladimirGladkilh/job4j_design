@@ -20,12 +20,13 @@ public class AnalizyTest {
         File source = folder.newFile(path);
         File target = folder.newFile(out);
         try (PrintWriter outPrintWriter = new PrintWriter(source)) {
-            outPrintWriter.println("200 10:56:01\n" +
-                    "500 10:57:01\n" +
-                    "400 10:58:01\n" +
-                    "200 10:59:01\n" +
-                    "200 11:00:01\n" +
-                    "500 11:01:02\n" +
+
+            outPrintWriter.println("200 10:56:01" + System.lineSeparator() +
+                    "500 10:57:01" + System.lineSeparator() +
+                    "400 10:58:01" + System.lineSeparator() +
+                    "200 10:59:01" + System.lineSeparator() +
+                    "200 11:00:01" + System.lineSeparator() +
+                    "500 11:01:02" + System.lineSeparator() +
                     "200 11:02:02");
         }
         Analizy analizy = new Analizy();
