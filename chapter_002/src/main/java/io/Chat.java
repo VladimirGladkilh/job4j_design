@@ -1,8 +1,6 @@
 package io;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -10,8 +8,15 @@ import java.util.stream.Collectors;
 public class Chat {
     private static boolean sleep = true;
     private static boolean shut = false;
+    static final String COMMAND_STOP = "стоп";
+    static final String COMMAND_START = "продолжить";
+    static final String COMMAND_END = "закончить";
 
     public static void main(String[] args) {
+        sayWithMe();
+    }
+
+    private static void sayWithMe() {
         Scanner scanner = new Scanner(System.in);
         Slovar slovar = new Slovar();
         while (sleep) {
@@ -20,6 +25,8 @@ public class Chat {
         }
         System.out.println("Пока, пока");
     }
+
+
     private static void say(Slovar slovar) {
         if (!shut) {
             String say = slovar.getAnswer();
@@ -29,10 +36,9 @@ public class Chat {
     }
 
     private static void writeToLog(String text) {
-        try {
-            FileWriter writer = new FileWriter("chatLog.txt", true);
+        try (FileWriter writer = new FileWriter("chatLog.txt", true);) {
             BufferedWriter bufferWriter = new BufferedWriter(writer);
-            bufferWriter.write(text + "\n");
+            bufferWriter.write(text + System.lineSeparator());
             bufferWriter.close();
         }
         catch (IOException e) {
@@ -42,14 +48,14 @@ public class Chat {
 
     private static void analize(String command) {
         writeToLog(">> "+ command);
-        switch (command) {
-            case "Стоп":
+        switch (command.toLowerCase()) {
+            case COMMAND_STOP:
                 shut = true;
                 break;
-            case "Продолжить":
+            case COMMAND_START:
                 shut = false;
                 break;
-            case "Закончить":
+            case COMMAND_END:
                 shut = true;
                 sleep = false;
                 break;
@@ -60,7 +66,7 @@ public class Chat {
         private String[] slova;
         public Slovar() {
             try (BufferedReader in = new BufferedReader(new FileReader("slovar.txt"))) {
-                this.slova = in.lines().collect(Collectors.joining("\n")).split("\n");
+                this.slova = in.lines().collect(Collectors.joining(System.lineSeparator())).split(System.lineSeparator());
             } catch (Exception e) {
                 e.printStackTrace();
             }
