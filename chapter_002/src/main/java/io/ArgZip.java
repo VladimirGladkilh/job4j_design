@@ -1,9 +1,5 @@
 package io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.FileSystemNotFoundException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +23,8 @@ public class ArgZip {
      * @return
      */
     public boolean valid() {
-        return params.size() >= 3 && !params.get("-d").equals("")
-                && !params.get("-o").equals("") && !params.get("-e").equals("");
+        return params.size() >= 3 && !params.getOrDefault("-d","").equals("")
+                && !params.getOrDefault("-o","").equals("") && !params.getOrDefault("-e","").equals("");
     }
 
     public String directory() {
