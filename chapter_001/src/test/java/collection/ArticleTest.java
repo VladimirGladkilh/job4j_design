@@ -76,4 +76,14 @@ public class ArticleTest {
                 is(false)
         );
     }
+    @Test
+    public void whenHincuSay() {
+        assertThat(
+                Article.generateBy(
+                        "Мама мыла раму",
+                        "раму раму мыла"
+                ),
+                is(false)
+        );
+    }
 }
