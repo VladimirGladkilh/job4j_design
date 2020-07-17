@@ -23,7 +23,7 @@ public class Find {
             Path root = Paths.get(param.directory());
             List<Path> sourceFiles = null;
             try {
-                Predicate<Path> predicate = preparePredicate(param);
+                Predicate<Path> predicate = PredicatFactory.preparePredicate(param);
                 sourceFiles = getPathList(root, predicate);
             } catch (IOException e) {
                 LOG.error("Get path error", e);
@@ -35,26 +35,7 @@ public class Find {
         }
     }
 
-    private static Predicate<Path> preparePredicate(Param param) {
-        if (!param.fileName().equals("")) {
-            return path -> path.toFile().getName().toLowerCase().equals(param.fileName().toLowerCase());
-        } else {
-            if (!param.mask().equals("")) {
-                String[] searcher = param.mask().split("\\.");
-                if (searcher[0].equals("*")) {
-                    return path -> path.toFile().getName().endsWith(searcher[1]);
-                } else {
-                    if (searcher[1].equals("*")) {
-                        return path -> path.toFile().getName().startsWith(searcher[0]);
-                    } else {
-                        return path -> path.toFile().getName().toLowerCase().equals(param.mask().toLowerCase());
-                    }
-                }
-            } else {
-                return path -> path.toFile().getName().matches(param.regexp());
-            }
-        }
-    }
+
 
     private static void resultSourceFiles(List<Path> sourceFiles, String output) {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
