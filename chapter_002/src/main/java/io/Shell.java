@@ -2,11 +2,10 @@ package io;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Shell {
 
-    private Stack<String> root = new Stack<>();
+    private final Stack<String> root = new Stack<>();
 
     public void cd(String path) {
         for (String p : path.split("/")) {
@@ -25,7 +24,7 @@ public class Shell {
         if (root.isEmpty() ) {
             return "/";
         }
-        return '/' + root.stream().collect(Collectors.joining("/"));
+        return '/' + String.join("/", root);
     }
 
 }
