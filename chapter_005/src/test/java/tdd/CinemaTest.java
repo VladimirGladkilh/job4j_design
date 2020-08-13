@@ -1,6 +1,5 @@
 package tdd;
 
-import junit.framework.TestCase;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
