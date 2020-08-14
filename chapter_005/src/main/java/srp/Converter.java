@@ -6,7 +6,7 @@ import java.util.List;
  * Класс отвечает за конвертацию файлов
  */
 public class Converter {
-    public String convertToString(List<Employee> employees) {
+    public String convertToString(String employees) {
         return null;
     }
 

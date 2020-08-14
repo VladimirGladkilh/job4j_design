@@ -5,12 +5,15 @@ import java.util.LinkedHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ReportHTML implements ReportStore {
-    private Store store;
+public class ReportXML implements ReportStore {
 
-    public ReportHTML(Store store) {
+    private final Store store;
+
+    public ReportXML(Store store) {
         this.store = store;
     }
+
+
     @Override
     public String generate(Predicate<Employee> filter) {
         return generate(filter, new LinkedHashMap<String, String>());
@@ -25,24 +28,24 @@ public class ReportHTML implements ReportStore {
     @Override
     public String generate(Predicate<Employee> filter, LinkedHashMap<String, String> titles) {
         StringBuilder text = new StringBuilder();
-        text.append("<html><head>HTML report</head><body>");
+        text.append("<?xml version=\"1.0\" encoding=\"WINDOWS-1251\"?><table>");
         text.append(createTableHeader(titles));
         for (Employee employee : store.findBy(filter)) {
             text.append(createTableRow(employee, titles));
         }
-        text.append("</body></html>");
+        text.append("</table>");
         return text.toString();
     }
 
     @Override
     public String generate(Predicate<Employee> filter, LinkedHashMap<String, String> titles, Comparator<Employee> comparator) {
         StringBuilder text = new StringBuilder();
-        text.append("<html><head>HTML report</head><body>");
+        text.append("<?xml version=\"1.0\" encoding=\"WINDOWS-1251\"?><table>");
         text.append(createTableHeader(titles));
         for (Employee employee : store.findBy(filter).stream().sorted(comparator).collect(Collectors.toList())) {
             text.append(createTableRow(employee, titles));
         }
-        text.append("</body></html>");
+        text.append("</table>");
         return text.toString();
     }
 

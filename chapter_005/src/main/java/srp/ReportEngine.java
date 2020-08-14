@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ReportEngine implements ReportStore{
+public class ReportEngine implements ReportStore {
     private final Store store;
 
     public ReportEngine(Store store) {
