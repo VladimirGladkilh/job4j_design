@@ -1,0 +1,104 @@
+package srp;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class ReportHTML implements ReportStore{
+    private Store store;
+
+    public ReportHTML(Store store) {
+        this.store = store;
+    }
+    @Override
+    public String generate(Predicate<Employee> filter) {
+        return generate(filter, new LinkedHashMap<String, String>());
+    }
+
+    /**
+     * Создает HTML отчет
+     * @param filter ограничение выборки
+     * @param titles карта соотношением Имя поля - заголовок
+     * @return
+     */
+    @Override
+    public String generate(Predicate<Employee> filter, LinkedHashMap<String, String> titles) {
+        StringBuilder text = new StringBuilder();
+        text.append("<html><head>HTML report</head><body>");
+        text.append(createTableHeader(titles));
+        for (Employee employee : store.findBy(filter)) {
+            text.append(createTableRow(employee, titles));
+        }
+        text.append("</body></html>");
+        return text.toString();
+    }
+
+    @Override
+    public String generate(Predicate<Employee> filter, LinkedHashMap<String, String> titles, Comparator<Employee> comparator) {
+        StringBuilder text = new StringBuilder();
+        text.append("<html><head>HTML report</head><body>");
+        text.append(createTableHeader(titles));
+        for (Employee employee : store.findBy(filter).stream().sorted(comparator).collect(Collectors.toList())) {
+            text.append(createTableRow(employee, titles));
+        }
+        text.append("</body></html>");
+        return text.toString();
+    }
+
+    /**
+     * Создаем шапку отчета
+     * @param titles если карта пустая то вернем апку со всеми столбцами
+     * @return
+     */
+    @Override
+    public String createTableHeader(LinkedHashMap<String, String> titles) {
+        StringBuilder text = new StringBuilder();
+        if (titles.size() > 0) {
+            text.append("<tr>");
+            for (String titl : titles.values()) {
+                text.append("<td>").append(titl).append("</td>");
+            }
+            text.append("</tr>");
+        } else {
+            text.append("<tr><td>Name</td><td>Hired</td><td>Fired</td><td>Salary</td></tr>");
+        }
+        return text.toString();
+    }
+
+    /**
+     * Получаем из работника необходимые поля (или все если карта пустая)
+     * ПРи работе через SQL можно было бы просто получить только нужные поля
+     * в нужном порядке и сразу выводить их в сетку, так было бы быстрее
+     * чем перебирать реквизиты каждого работника
+     * @param employee
+     * @param titles
+     * @return
+     */
+    @Override
+    public String createTableRow(Employee employee, LinkedHashMap<String, String> titles) {
+        StringBuilder text = new StringBuilder();
+        if (titles.size() > 0) {
+            text.append("<tr>");
+            for (String titl : titles.keySet()) {
+                switch (titl) {
+                    case "Name" : text.append("<td>").append(employee.getName()).append("</td>"); break;
+                    case "Hired" : text.append("<td>").append(employee.getHired()).append("</td>"); break;
+                    case "Fired" : text.append("<td>").append(employee.getFired()).append("</td>"); break;
+                    case "Salary" : text.append("<td>").append(employee.getSalary()).append("</td>"); break;
+                }
+            }
+            text.append("</tr>");
+        } else {
+            text.append("<tr>")
+                    .append("<td>").append(employee.getName()).append("</td>")
+                    .append("<td>").append(employee.getHired()).append("</td>")
+                    .append("<td>").append(employee.getFired()).append("</td>")
+                    .append("<td>").append(employee.getSalary()).append("</td>")
+                    .append("</tr>");
+        }
+        return text.toString();
+    }
+}
