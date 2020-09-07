@@ -1,7 +1,5 @@
 package concurrent;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(() -> System.out.println(Thread.currentThread().getName())
