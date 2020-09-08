@@ -10,11 +10,9 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
     private Node<K, V>[] table;
     private final float loadFactor;
-    private Node<K, V> next;
     private int count;
 
     private int threshold;
-    private Node<K, V> current;
 
     private transient int modCount = 0;
 
@@ -175,13 +173,13 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         public SmIterator() {
             expectedModCount = modCount;
             Node<K, V>[] t = table;
-            current = next;
+            current = null;
             next = null;
             index = 0;
             if (t != null && count > 0) { // advance to first entry
                 do {
-                    //some text
-                } while (index < t.length && (next = t[index++]) == null);
+                    next = t[index++];
+                } while (index - 1 < t.length && next == null);
             }
         }
 
@@ -203,7 +201,8 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             next = current.next;
             if (next == null && t != null) {
                 do {
-                } while (index < t.length && (next = t[index++]) == null);
+                    next = t[index++];
+                } while (index - 1 < t.length && next == null);
             }
             return e;
         }
