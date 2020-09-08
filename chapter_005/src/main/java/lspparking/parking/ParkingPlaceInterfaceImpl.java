@@ -1,6 +1,6 @@
-package lsp2.parking;
+package lspparking.parking;
 
-import lsp2.cars.CarInterface;
+import lspparking.cars.CarInterface;
 
 /**
  * Класс для реализации парковочного места размера size

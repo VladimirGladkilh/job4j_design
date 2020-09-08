@@ -1,9 +1,9 @@
-package lsp2;
+package lspparking;
 
-import lsp2.cars.BigCar;
-import lsp2.cars.CarInterface;
-import lsp2.cars.SmallCar;
-import lsp2.parking.ParkingStore;
+import lspparking.cars.BigCar;
+import lspparking.cars.CarInterface;
+import lspparking.cars.SmallCar;
+import lspparking.parking.ParkingStore;
 import org.junit.Test;
 
 import java.util.*;

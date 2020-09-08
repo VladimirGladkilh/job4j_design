@@ -2,7 +2,7 @@ package isp;
 
 import java.util.List;
 
-public class FindAll implements UserAction{
+public class FindAll implements UserAction {
     @Override
     public String name() {
         return "=== Show All Items ====";
@@ -26,10 +26,10 @@ public class FindAll implements UserAction{
 
     private static void print(Item item, int i) {
         StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < i; j ++) {
+        for (int j = 0; j < i; j++) {
             sb.append("\t");
         }
-        sb.append(item.getId()+":" + item.getName());
+        sb.append(item.getId() + ":" + item.getName());
         System.out.println(sb.toString());
         i++;
         int finalI = i;

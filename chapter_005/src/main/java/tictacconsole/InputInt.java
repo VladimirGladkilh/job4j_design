@@ -1,4 +1,4 @@
-package TicTacConsole;
+package tictacconsole;
 
 public interface InputInt {
     int[] askXY(int max);

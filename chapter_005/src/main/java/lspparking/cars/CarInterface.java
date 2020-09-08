@@ -1,4 +1,4 @@
-package lsp2.cars;
+package lspparking.cars;
 
 /**
  * Описание машины

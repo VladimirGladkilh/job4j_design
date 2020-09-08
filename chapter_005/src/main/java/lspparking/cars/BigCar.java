@@ -1,14 +1,14 @@
-package lsp2.cars;
+package lspparking.cars;
 
 /**
- * Класс легковых авто
+ * Большая машина
  */
-public class SmallCar implements CarInterface {
+public class BigCar implements CarInterface {
 
     private final String id;
-    private final int parkingSize = 1;
+    private final int parkingSize = 3;
 
-    public SmallCar(String id) {
+    public BigCar(String id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package TicTacConsole;
+package tictacconsole;
 
 import java.util.Scanner;
 

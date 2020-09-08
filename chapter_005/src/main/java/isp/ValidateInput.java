@@ -1,6 +1,6 @@
 package isp;
 
-public class ValidateInput implements Input{
+public class ValidateInput implements Input {
     private final Input input;
 
     public ValidateInput(Input input) {

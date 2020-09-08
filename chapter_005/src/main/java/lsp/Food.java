@@ -21,13 +21,13 @@ public class Food {
     @Override
     public String toString() {
 
-        return "Food{" +
-                "name='" + name + '\'' +
-                ", expaireDate=" + expaireDate +
-                ", createDate=" + new SimpleDateFormat("dd.MM.yyyy").format(createDate.getTime()) +
-                ", price=" + price +
-                ", disscount=" + disscount +
-                '}';
+        return "Food{"
+                + "name='" + name + '\''
+                + ", expaireDate=" + expaireDate
+                + ", createDate=" + new SimpleDateFormat("dd.MM.yyyy").format(createDate.getTime())
+                + ", price=" + price
+                + ", disscount=" + disscount
+                + '}';
     }
 
     public String getName() {
@@ -72,12 +72,16 @@ public class Food {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Food food = (Food) o;
-        return name.equals(food.name) &&
-                expaireDate == food.expaireDate &&
-                createDate.equals(food.createDate);
+        return name.equals(food.name)
+                && expaireDate == food.expaireDate
+                && createDate.equals(food.createDate);
     }
 
     @Override

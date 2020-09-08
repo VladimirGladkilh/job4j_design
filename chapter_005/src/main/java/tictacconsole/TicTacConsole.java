@@ -1,15 +1,14 @@
-package TicTacConsole;
+package tictacconsole;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TicTacConsole {
     private int size = 3;
-    private Figure[][] cells;// = new Figure[size][size];
-    private Logic logic;// = new Logic(cells);
+    private Figure[][] cells;
+    private Logic logic;
     private boolean userMarker = true;
     private boolean who = true;
 

@@ -19,7 +19,7 @@ public class MaxMin {
         T returnValue = value.get(0);
         int findFlag = findMax ? 1 : -1;
         for (T val : value) {
-            returnValue = (comparator.compare(returnValue,val) * findFlag <= 0) ? val : returnValue;
+            returnValue = (comparator.compare(returnValue, val) * findFlag <= 0) ? val : returnValue;
         }
         return returnValue;
     }

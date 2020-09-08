@@ -20,9 +20,9 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    String str;
+                    String str = in.readLine();
                     String command = "";
-                    while (!(str = in.readLine()).isEmpty()) {
+                    while (!str.isEmpty()) {
                         System.out.println(str);
                         if (str.indexOf("msg=") > 0) {
                             command = str.split("msg=")[1];
@@ -36,12 +36,13 @@ public class EchoServer {
                                 }
                             }
                         }
+                        str = in.readLine();
                     }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write(command.getBytes());
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             LOG.error("Error in main method", e);
         }
     }

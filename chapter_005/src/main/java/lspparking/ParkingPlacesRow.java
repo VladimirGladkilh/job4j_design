@@ -1,8 +1,8 @@
-package lsp2;
+package lspparking;
 
-import lsp2.cars.CarInterface;
-import lsp2.parking.ParkingPlaceInterface;
-import lsp2.parking.ParkingStore;
+import lspparking.cars.CarInterface;
+import lspparking.parking.ParkingPlaceInterface;
+import lspparking.parking.ParkingStore;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ import java.util.*;
  * в реале это чистое поле расчерченное на фрагменты. Если же границы есть, то
  * метод haveFreePlace использовать без метода findInSomePlaces
  */
-public class ParkingPlacesRow implements ParkingStore{
+public class ParkingPlacesRow implements ParkingStore {
     List<ParkingStore> parkingStoreList = new LinkedList<>();
     Map<String, ParkingPlaceInterface> parkingMap = new LinkedHashMap<>();
 

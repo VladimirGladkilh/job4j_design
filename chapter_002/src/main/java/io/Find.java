@@ -59,8 +59,7 @@ public class Find {
             BufferedWriter bufferWriter = new BufferedWriter(writer);
             bufferWriter.write(text + System.lineSeparator());
             bufferWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOG.error("Write to log file", e);
         }
     }

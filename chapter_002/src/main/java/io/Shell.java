@@ -21,7 +21,7 @@ public class Shell {
     }
 
     public String pwd() {
-        if (root.isEmpty() ) {
+        if (root.isEmpty()) {
             return "/";
         }
         return '/' + String.join("/", root);

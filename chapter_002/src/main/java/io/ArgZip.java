@@ -11,7 +11,7 @@ public class ArgZip {
         for (String s:args
              ) {
             String[] arr = s.split("=");
-            if (arr.length > 0 ) {
+            if (arr.length > 0) {
                 params.put(arr[0].trim(), arr[1].trim());
             }
         }
@@ -23,8 +23,8 @@ public class ArgZip {
      * @return
      */
     public boolean valid() {
-        return params.size() >= 3 && !params.getOrDefault("-d","").equals("")
-                && !params.getOrDefault("-o","").equals("") && !params.getOrDefault("-e","").equals("");
+        return params.size() >= 3 && !params.getOrDefault("-d", "").equals("")
+                && !params.getOrDefault("-o", "").equals("") && !params.getOrDefault("-e", "").equals("");
     }
 
     public String directory() {

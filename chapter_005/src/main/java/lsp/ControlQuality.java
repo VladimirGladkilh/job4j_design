@@ -13,7 +13,7 @@ public class ControlQuality {
         for (Food food : foodList) {
             for (Store store: this.stores) {
                 store.add(food);
-            };
+            }
         }
     }
     /**
@@ -25,17 +25,11 @@ public class ControlQuality {
         for (Store store: this.stores) {
             List<Food> foods = store.clear();
             foodList.addAll(foods);
-        };
-
+        }
         for (Food food : foodList) {
             for (Store store: this.stores) {
                     store.add(food);
-            };
+            }
         }
-
     }
-
-
-
-
 }

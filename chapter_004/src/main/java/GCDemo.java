@@ -1,6 +1,3 @@
-import java.awt.event.WindowFocusListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class GCDemo {
 
         @Override
         protected void finalize() throws Throwable {
-            System.out.println("User Deleted"+ this.name);
+            System.out.println("User Deleted" + this.name);
         }
     }
     public static void main(String[] args) {
@@ -31,11 +28,9 @@ public class GCDemo {
         info("Start");
         List<User> list = new LinkedList<>();
         for (int i = 0; i < 20000; i++) {
-            User data = new User("User " + i, "Id "+ i);
+            User data = new User("User " + i, "Id " + i);
             list.add(data);
-            //list.add(new User());
         }
-        //list = null;
         info("Byssy");
         System.gc();
 
@@ -44,8 +39,8 @@ public class GCDemo {
         int mb = 1024 * 1024;
         Runtime runtime = Runtime.getRuntime();
         System.out.println(s);
-        System.out.println("Total = " + runtime.totalMemory() / mb );
-        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb  );
-        System.out.println("Free  = " + runtime.freeMemory() / mb );
+        System.out.println("Total = " + runtime.totalMemory() / mb);
+        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb);
+        System.out.println("Free  = " + runtime.freeMemory() / mb);
     }
 }

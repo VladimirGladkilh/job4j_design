@@ -29,6 +29,7 @@ public class FileLoader {
                     start = System.currentTimeMillis();
                 }
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
+                fileOutputStream.flush();
                 System.out.println(bytesRead);
             }
         } catch (IOException | InterruptedException e) {

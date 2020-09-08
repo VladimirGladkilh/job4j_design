@@ -89,6 +89,7 @@ public class ReportXML implements ReportStore {
                     case "Hired" : text.append("<td>").append(employee.getHired()).append("</td>"); break;
                     case "Fired" : text.append("<td>").append(employee.getFired()).append("</td>"); break;
                     case "Salary" : text.append("<td>").append(employee.getSalary()).append("</td>"); break;
+                    default: break;
                 }
             }
             text.append("</tr>");

@@ -19,7 +19,7 @@ public class Warehouse implements Store {
         int expDay = food.getExpaireDate();
         long milliseconds = Calendar.getInstance().getTime().getTime() - food.getCreateDate().getTime().getTime();
         int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
-        double percent = 1 - ((double)days / expDay);
+        double percent = 1 - ((double) days / expDay);
         if (percent >= 0.75) {
             System.out.println(food.getName() + " add to Warehouse");
             return true;

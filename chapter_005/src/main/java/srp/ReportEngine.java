@@ -80,6 +80,7 @@ public class ReportEngine implements ReportStore {
                     case "Hired" : text.append(employee.getHired()).append("; "); break;
                     case "Fired" : text.append(employee.getFired()).append("; "); break;
                     case "Salary" : text.append(employee.getSalary()).append("; "); break;
+                    default: break;
                 }
             }
         } else {

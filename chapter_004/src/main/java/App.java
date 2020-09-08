@@ -13,17 +13,23 @@ public class App {
 
         while (cont) {
             System.out.println(
-                    "\n\nI have " + objects.size() + " objects in use, about " +
-                            (objects.size() * 10) + " MB." +
-                            "\nWhat would you like me to do?\n" +
-                            "1. Create some objects\n" +
-                            "2. Remove some objects\n" +
-                            "0. Quit");
+                    "\n\nI have " + objects.size() + " objects in use, about "
+                            + (objects.size() * 10) + " MB."
+                            + "\nWhat would you like me to do?\n"
+                            + "1. Create some objects\n"
+                            + "2. Remove some objects\n"
+                            + "0. Quit");
             input = in.readLine();
             if ((input != null) && (input.length() >= 1)) {
-                if (input.startsWith("0")) cont = false;
-                if (input.startsWith("1")) createObjects();
-                if (input.startsWith("2")) removeObjects();
+                if (input.startsWith("0")) {
+                    cont = false;
+                }
+                if (input.startsWith("1")) {
+                    createObjects();
+                }
+                if (input.startsWith("2")) {
+                    removeObjects();
+                }
             }
         }
 
@@ -33,7 +39,7 @@ public class App {
     private static void createObjects() {
         System.out.println("Creating objects...");
         for (int i = 0; i < 2; i++) {
-            objects.add(new byte[10*1024*1024]);
+            objects.add(new byte[10 * 1024 * 1024]);
         }
 
     }
@@ -48,11 +54,11 @@ public class App {
 
     }
     private static void info() {
-        int mb = 1024 ;
+        int mb = 1024;
         Runtime runtime = Runtime.getRuntime();
         System.out.println("Memory info");
-        System.out.println("Total = " + runtime.totalMemory() / mb );
-        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb  );
-        System.out.println("Free  = " + runtime.freeMemory() / mb );
+        System.out.println("Total = " + runtime.totalMemory() / mb);
+        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb);
+        System.out.println("Free  = " + runtime.freeMemory() / mb);
     }
 }

@@ -14,10 +14,10 @@ public class SubMenuAction implements MenuActionInterface {
     }
     private static void print(Item item, int lvl) {
         StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < lvl; j ++) {
+        for (int j = 0; j < lvl; j++) {
             sb.append("\t");
         }
-        sb.append(item.getId()+":" + item.getName());
+        sb.append(item.getId() + ":" + item.getName());
         System.out.println(sb.toString());
         lvl++;
         int finalI = lvl;

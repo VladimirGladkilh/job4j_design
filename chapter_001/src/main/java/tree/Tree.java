@@ -25,7 +25,7 @@ class Tree<E> implements SimpleTree<E> {
         Optional<Node<E>> findChild = findBy(child);
         if (findParent.isPresent() && !findChild.isPresent()) {
             findParent.get().children.add(new Node<>(child));
-            if (findParent.get().children.size() > 2){
+            if (findParent.get().children.size() > 2) {
                 this.isBinTree = false;
             }
             rsl = true;

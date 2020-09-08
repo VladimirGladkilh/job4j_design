@@ -28,7 +28,7 @@ public class Article {
     }
     private static String replaceSpec(String origin) {
         return origin.replace(".", "")
-                .replace(",","")
+                .replace(",", "")
                 .replace("!", "")
                 .replace("?", "");
     }

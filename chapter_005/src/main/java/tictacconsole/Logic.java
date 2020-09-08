@@ -1,4 +1,4 @@
-package TicTacConsole;
+package tictacconsole;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -20,7 +20,7 @@ public class Logic {
                     result = true;
                     break;
                 }
-            }else {
+            } else {
                 diag = false;
             }
             startX += deltaX;
@@ -58,10 +58,10 @@ public class Logic {
      * @return
      */
     public boolean isWinnerX() {
-        return this.fillBy(Figure::hasMarkX, 0, 0, 1, 0) ||
-                this.fillBy(Figure::hasMarkX, 0, 0, 1, 1) ||
-                this.fillBy(Figure::hasMarkX, 0, 0, 0, 1) ||
-                this.fillBy(Figure::hasMarkX, this.table.length - 1 , 0, -1, 1);
+        return this.fillBy(Figure::hasMarkX, 0, 0, 1, 0)
+                || this.fillBy(Figure::hasMarkX, 0, 0, 1, 1)
+                || this.fillBy(Figure::hasMarkX, 0, 0, 0, 1)
+                ||                this.fillBy(Figure::hasMarkX, this.table.length - 1, 0, -1, 1);
     }
     /**
      * Проверяем первую горизонталь, первую вертикаль и обе диагонали
@@ -69,10 +69,10 @@ public class Logic {
      * @return
      */
     public boolean isWinnerO() {
-        return this.fillBy(Figure::hasMarkO, 0, 0, 1, 0) ||
-                this.fillBy(Figure::hasMarkO, 0, 0, 1, 1) ||
-                this.fillBy(Figure::hasMarkO, 0, 0, 0, 1) ||
-                this.fillBy(Figure::hasMarkO, this.table.length - 1 , 0, -1, 1);
+        return this.fillBy(Figure::hasMarkO, 0, 0, 1, 0)
+                ||                this.fillBy(Figure::hasMarkO, 0, 0, 1, 1)
+                ||                this.fillBy(Figure::hasMarkO, 0, 0, 0, 1)
+                ||                this.fillBy(Figure::hasMarkO, this.table.length - 1, 0, -1, 1);
 
     }
 

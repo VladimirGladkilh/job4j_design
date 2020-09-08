@@ -8,8 +8,8 @@ public class ResultFile {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         for (int i = 1; i < 10; i++) {
             StringJoiner sk = new StringJoiner("\t");
-            for (int k = 1; k < 10; k ++) {
-                sk.add(k + "*" + i + "="+ k * i);
+            for (int k = 1; k < 10; k++) {
+                sk.add(k + "*" + i + "=" + k * i);
             }
             sj.add(sk.toString());
         }

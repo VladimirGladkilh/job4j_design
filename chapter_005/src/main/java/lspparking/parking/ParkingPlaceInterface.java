@@ -1,6 +1,6 @@
-package lsp2.parking;
+package lspparking.parking;
 
-import lsp2.cars.CarInterface;
+import lspparking.cars.CarInterface;
 
 /**
  * Интерфейс для описания парковочного места

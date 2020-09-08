@@ -1,4 +1,4 @@
-package TicTacConsole;
+package tictacconsole;
 
 public class Figure {
     private boolean markX = false;
@@ -24,5 +24,7 @@ public class Figure {
     public boolean hasMarkO() {
         return this.markO;
     }
-    public boolean isClean() {return this.markX==this.markO; }
+    public boolean isClean() {
+        return this.markX == this.markO;
+    }
 }

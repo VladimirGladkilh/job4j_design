@@ -17,7 +17,7 @@ public class Cache {
     static final String COMMAND_STOP = "exit";
     static final String COMMAND_GC = "gc";
     private static SimpleCacheHashMap cacheHashMap = new SimpleCacheHashMap();
-    private static final Path root = Paths.get("C:\\temp");
+    private static final Path ROOT = Paths.get("C:\\temp");
     private static final Logger LOG = LoggerFactory.getLogger(Cache.class.getName());
 
     public static void main(String[] args) {
@@ -44,12 +44,12 @@ public class Cache {
      * ссылки из мапы начинают пропадать
      */
     private static void info() {
-        int mb = 1024 ;
+        int mb = 1024;
         Runtime runtime = Runtime.getRuntime();
         System.out.println("Memory info");
-        System.out.println("Total = " + runtime.totalMemory() / mb );
-        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb  );
-        System.out.println("Free  = " + runtime.freeMemory() / mb );
+        System.out.println("Total = " + runtime.totalMemory() / mb);
+        System.out.println("Used  = " + (runtime.totalMemory() - runtime.freeMemory()) / mb);
+        System.out.println("Free  = " + runtime.freeMemory() / mb);
     }
 
     /**
@@ -84,7 +84,7 @@ public class Cache {
 
         String innerText = "";
         Predicate<Path> predicate = path -> path.toFile().getName().toLowerCase().equals(command);
-        List<Path> sourceFiles = getPathList(root, predicate);
+        List<Path> sourceFiles = getPathList(ROOT, predicate);
         for (Path file: sourceFiles) {
             innerText = readFileText(file.toFile().getAbsolutePath());
             cacheHashMap.insert(command, innerText);
@@ -104,7 +104,7 @@ public class Cache {
 
     private static List<Path> getPathList(Path rootFolder, Predicate<Path> predicate) throws IOException {
         SearchFiles searcher = new SearchFiles(predicate);
-        Files.walkFileTree(root, searcher);
+        Files.walkFileTree(Cache.ROOT, searcher);
         return searcher.getPaths();
     }
 

@@ -16,7 +16,7 @@ public class StartUI {
 
     private void showMenu(List<UserAction> actions, Store memTracker) {
         System.out.println("Menu.");
-        for (Item item : memTracker.findAll() ) {
+        for (Item item : memTracker.findAll()) {
             print(item, 0);
         }
         System.out.println("Work with menu");
@@ -26,10 +26,10 @@ public class StartUI {
     }
     private static void print(Item item, int lvl) {
         StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < lvl; j ++) {
+        for (int j = 0; j < lvl; j++) {
             sb.append("\t");
         }
-        sb.append(item.getId()+":" + item.getName());
+        sb.append(item.getId() + ":" + item.getName());
         System.out.println(sb.toString());
         lvl++;
         int finalI = lvl;
@@ -39,18 +39,13 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-
         Store tracker = new MemTracker();
-
-
             List<UserAction> actions = new ArrayList<>();
             actions.add(new CreateItem());
             actions.add(new CreateSubItem());
             actions.add(new FindAll());
             actions.add(new ExecuteItem());
             actions.add(new Close());
-
             new StartUI().init(validate, tracker, actions);
-
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Shop implements Store{
+public class Shop implements Store {
     List<Food> foodList = new LinkedList<>();
 
     @Override
@@ -20,7 +20,7 @@ public class Shop implements Store{
         int expDay = food.getExpaireDate();
         long milliseconds = Calendar.getInstance().getTime().getTime() - food.getCreateDate().getTime().getTime();
         int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
-        double percent = 1 - ((double)days / expDay);
+        double percent = 1 - ((double) days / expDay);
        // System.out.println(percent);
         if (percent > 0.25 && percent < 0.75) {
             System.out.println(food.getName() + " add to Shop");

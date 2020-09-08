@@ -1,7 +1,7 @@
 package isp;
 
 
-public class CreateItem implements UserAction{
+public class CreateItem implements UserAction {
     @Override
     public String name() {
         return "=== Create a new Item ====";

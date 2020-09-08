@@ -2,7 +2,7 @@ package isp;
 
 import java.util.List;
 
-public class FindById implements UserAction{
+public class FindById implements UserAction {
     @Override
     public String name() {
         return "=== Find Item By ID====";

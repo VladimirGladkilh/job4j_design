@@ -16,7 +16,7 @@ public class CreateSubItem implements UserAction {
             String name = input.askStr("Enter name: ");
             Item item = new Item(name);
             item.setAction(new MenuAction());
-            item.setId(find.getId() +"."+ String.valueOf(find.getChilds().size()));
+            item.setId(find.getId() + "." + String.valueOf(find.getChilds().size()));
             find.getChilds().add(item);
             find.setAction(new SubMenuAction());
         }

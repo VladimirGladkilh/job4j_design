@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
-public class SearchFiles  implements FileVisitor<Path>{
+public class SearchFiles  implements FileVisitor<Path> {
     private Predicate<Path> searchString;
     private List<Path> pathList = new LinkedList<>();
 
@@ -34,7 +34,7 @@ public class SearchFiles  implements FileVisitor<Path>{
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if (searchString.test(file)){
+        if (searchString.test(file)) {
             pathList.add(file);
         }
         return CONTINUE;

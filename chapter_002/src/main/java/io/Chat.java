@@ -31,7 +31,7 @@ public class Chat {
         if (!shut) {
             String say = slovar.getAnswer();
             System.out.println(say);
-            writeToLog("<< "+ say);
+            writeToLog("<< " + say);
         }
     }
 
@@ -40,14 +40,13 @@ public class Chat {
             BufferedWriter bufferWriter = new BufferedWriter(writer);
             bufferWriter.write(text + System.lineSeparator());
             bufferWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     private static void analize(String command) {
-        writeToLog(">> "+ command);
+        writeToLog(">> " + command);
         switch (command.toLowerCase()) {
             case COMMAND_STOP:
                 shut = true;
@@ -58,6 +57,8 @@ public class Chat {
             case COMMAND_END:
                 shut = true;
                 sleep = false;
+                break;
+            default: shut = false;
                 break;
         }
     }
@@ -71,7 +72,7 @@ public class Chat {
                 e.printStackTrace();
             }
         }
-        public String getAnswer(){
+        public String getAnswer() {
             int index = new Random().nextInt(this.slova.length - 1);
             return this.slova[index];
         }

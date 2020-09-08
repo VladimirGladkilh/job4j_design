@@ -1,48 +1,51 @@
-package lsp2;
+package lspparking;
 
-import lsp2.cars.CarInterface;
-import lsp2.parking.ParkingPlaceInterface;
-import lsp2.parking.ParkingPlaceInterfaceImpl;
-import lsp2.parking.ParkingStore;
+import lspparking.cars.CarInterface;
+import lspparking.parking.ParkingPlaceInterface;
+import lspparking.parking.ParkingPlaceInterfaceImpl;
+import lspparking.parking.ParkingStore;
 
 import java.util.*;
 
-public class SmallParkingPlaces implements ParkingStore {
+/**
+ * Класс для большого машиноместа с размером 3 (по умолчанию)
+ */
+public class BigParkingPlaces implements ParkingStore {
     //ID парковки н.п. A/B/C/D
     private String parkingName;
     //число парковочных мест
     private int placesCount = 1;
-    private int parkingPlaceSize = 1;
+    private int parkingPlaceSize = 3;
     //карта с местами
     Map<String, ParkingPlaceInterface> parkingMap = new LinkedHashMap<>();
 
-    public SmallParkingPlaces() {
-        this.parkingName = "Small";
-        for (int i = 0; i < this.placesCount; i ++) {
+    public BigParkingPlaces() {
+        this.parkingName = "Big";
+        for (int i = 0; i < this.placesCount; i++) {
             this.parkingMap.put(this.parkingName + i, new ParkingPlaceInterfaceImpl(this.parkingPlaceSize));
         }
     }
 
-    public SmallParkingPlaces(String parkingName) {
+    public BigParkingPlaces(String parkingName) {
         this.parkingName = parkingName;
-        for (int i = 0; i < this.placesCount; i ++) {
+        for (int i = 0; i < this.placesCount; i++) {
             this.parkingMap.put(this.parkingName + i, new ParkingPlaceInterfaceImpl(this.parkingPlaceSize));
         }
     }
 
-    public SmallParkingPlaces(String parkingName, int placesCount) {
+    public BigParkingPlaces(String parkingName, int placesCount) {
         this.parkingName = parkingName;
         this.placesCount = placesCount;
-        for (int i = 0; i < this.placesCount; i ++) {
+        for (int i = 0; i < this.placesCount; i++) {
             this.parkingMap.put(this.parkingName + i, new ParkingPlaceInterfaceImpl(this.parkingPlaceSize));
         }
     }
 
-    public SmallParkingPlaces(String pName, int pCount, int pPlaceSize) {
+    public BigParkingPlaces(String pName, int pCount, int pPlaceSize) {
         this.parkingName = pName;
         this.placesCount = pCount;
         this.parkingPlaceSize = pPlaceSize;
-        for (int i = 0; i < this.placesCount; i ++) {
+        for (int i = 0; i < this.placesCount; i++) {
             this.parkingMap.put(this.parkingName + i, new ParkingPlaceInterfaceImpl(this.parkingPlaceSize));
         }
     }
