@@ -1,7 +1,7 @@
 package lspparking.cars;
 
 /**
- * Большая машина
+ * Класс реализующий грузовую машину
  */
 public class BigCar implements CarInterface {
 

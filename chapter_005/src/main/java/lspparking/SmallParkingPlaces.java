@@ -7,6 +7,9 @@ import lspparking.parking.ParkingStore;
 
 import java.util.*;
 
+/**
+ * Последовательность малых пароковочных мест
+ */
 public class SmallParkingPlaces implements ParkingStore {
     //ID парковки н.п. A/B/C/D
     private String parkingName;

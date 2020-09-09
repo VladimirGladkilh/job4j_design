@@ -1,7 +1,7 @@
 package lspparking.cars;
 
 /**
- * Класс легковых авто
+ * Класс легковых авто. Можно расширить по аналогии с грузовыми
  */
 public class SmallCar implements CarInterface {
 

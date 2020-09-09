@@ -13,6 +13,7 @@ import java.util.*;
  * Границы последовательностей физически не разделены т.е.
  * в реале это чистое поле расчерченное на фрагменты. Если же границы есть, то
  * метод haveFreePlace использовать без метода findInSomePlaces
+ * и в интерфейсы парковочного места добавить наличие границ
  */
 public class ParkingPlacesRow implements ParkingStore {
     List<ParkingStore> parkingStoreList = new LinkedList<>();

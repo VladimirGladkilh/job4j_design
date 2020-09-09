@@ -4,6 +4,7 @@ import lspparking.cars.CarInterface;
 
 /**
  * Класс для реализации парковочного места размера size
+ * можно было бы сделать по аналогии с машинами - отдельные классы для большого и малого мест
  */
 public class ParkingPlaceInterfaceImpl implements ParkingPlaceInterface {
     int size = 1;

@@ -9,6 +9,7 @@ import java.util.*;
 
 /**
  * Класс для большого машиноместа с размером 3 (по умолчанию)
+ * у каждого места есть свое имя
  */
 public class BigParkingPlaces implements ParkingStore {
     //ID парковки н.п. A/B/C/D
