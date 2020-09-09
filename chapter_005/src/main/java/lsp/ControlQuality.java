@@ -12,7 +12,11 @@ public class ControlQuality {
     public void control(List<Food> foodList) {
         for (Food food : foodList) {
             for (Store store: this.stores) {
-                store.add(food);
+                if (store.accept(food)) {
+                    store.add(food);
+                    break;
+                }
+
             }
         }
     }
@@ -26,10 +30,6 @@ public class ControlQuality {
             List<Food> foods = store.clear();
             foodList.addAll(foods);
         }
-        for (Food food : foodList) {
-            for (Store store: this.stores) {
-                    store.add(food);
-            }
-        }
+        control(foodList);
     }
 }

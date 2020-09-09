@@ -10,9 +10,7 @@ public class Shop implements Store {
 
     @Override
     public void add(Food food) {
-        if (accept(food)) {
-            foodList.add(food);
-        }
+        foodList.add(food);
     }
 
     @Override
