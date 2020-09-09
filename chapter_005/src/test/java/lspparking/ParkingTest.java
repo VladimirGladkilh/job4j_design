@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ParkingTest {
+
     @Test
     public void testAddInBigParking() {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
